@@ -23,3 +23,11 @@ body{
 .nav > li > a.inactive:hover{
 	background-color: black;
 }
+
+.nav > li > a.active{
+	border-bottom: 2px solid white;
+}
+.nav > li > a.active:hover{
+	background-color: black;
+	color:white;
+}
