@@ -1,0 +1,189 @@
+@font-face {
+	font-family: ProximaNova
+	src: url('proxima-nova-regular.ttf') format("truetype");
+}
+*{
+	font-family: ProximaNova
+}
+.debug{
+	border: 1px dotted green;
+}
+body{
+	background-image: url('../images/bg.jpg');
+	background-size: cover;
+}
+.nav > li > a{
+	background-color: black;
+	margin-top: 45px;
+	margin-right: 24px;
+	color: white;
+}
+
+.nav > li > a:hover{
+	color: black;
+}
+
+.nav > li > a.inactive{
+	color:gray;
+	cursor: pointer;
+}
+.nav > li > a.inactive:hover{
+	background-color: black;
+}
+
+.nav > li > a.active{
+	border-bottom: 2px solid white;
+}
+.nav > li > a.active:hover{
+	background-color: black;
+	color:white;
+}
+.name-search{
+	margin-top: 50px;
+	background-color: rgba(0,0,0,0.5);
+	color: white;
+}
+.form-control:focus{
+	border-color: blueviolet;
+}
+.selections{
+	margin-top:50px;
+}
+/*.selections >.img-wrapper> img{
+}
+
+.selections >.img-wrapper> .name-label{
+	background-color: rgba(0,0,0,0.8);
+	color: white;
+	position: absolute;
+bottom: -27;
+width: 161;
+font-size: 20;
+
+}*/
+.selection{
+	background-color: rgba(0,0,0,0.5);
+	color: white;
+	min-height: 161px;
+	margin-top: 25px;
+}
+.selection-image {
+	max-height: 161px;
+}
+.selection > div{
+	min-height: 161px;
+	font-family: ProximaNova;
+}
+
+.selection-name{
+	margin-top: 26px;
+	width: 100%;
+	font-size: 30;
+}
+
+.selection-detail{
+	font-size: 20;
+	text-align: center;
+}
+.selection-wrapper{
+	margin-left: 15px;
+}
+
+@media(min-width: 768px) and (max-width: 979px){
+	.selection{
+		background-color: rgba(0,0,0,0.5);
+		color: white;
+		min-height: 80px;
+	}
+	.selection-image {
+		max-height: 80px;
+	}
+	.selection > div{
+		min-height: 80px;
+		font-family: ProximaNova;
+	}
+	.selection-name{
+		margin-top: 13px;
+		width: 100%;
+		font-size: 25;
+	}
+
+	.selection-detail{
+		font-size: 15;
+		text-align: center;
+	}
+	.selection-wrapper{
+		margin-left: 10px;
+	}
+}
+
+@media(max-width: 768px){
+	.selection{
+		background-color: rgba(0,0,0,0.5);
+		color: white;
+		min-height: 50px;
+	}
+	.selection-image {
+		max-height: 50px;
+	}
+	.selection > div{
+		min-height: 50px;
+		font-family: ProximaNova;
+	}
+	.selection-name{
+		margin-top: 9px;
+		width: 100%;
+		font-size: 15;
+	}
+
+	.selection-detail{
+		font-size: 10;
+		text-align: center;
+	}
+	.selection-wrapper{
+		margin-left: 5px;
+	}
+}
+.anon-selections-wrapper {
+	background-color: rgba(0,0,0,0.5);
+	color: white;
+	margin:0px;
+	margin-top:90px;
+}
+.anon-selections {
+	color: white;
+	font-family: ProximaNova;
+	font-size: 30px;
+}
+.img-anon{
+	max-height: 100px;
+}
+.anon-count{
+	height: 100px;
+}
+.anon-count>p{
+	position: absolute;
+	bottom: 9px;
+	font-size: 20;
+	font-family: ProximaNova;
+}
+.bin{
+	max-height: 33px;
+	right: 24px;
+	top: 32;
+	position: absolute;
+	cursor: pointer;
+}
+.submit-btn{
+	color: white;
+	background-color: black;
+	border-color: #cccccc;
+	position: absolute;
+	right: 15px;
+	margin-top: 10px;
+	font-size: 22px;
+}
+.submit-btn:hover{
+	color: black;
+	background-color: white;
+}

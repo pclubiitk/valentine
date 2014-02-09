@@ -1,0 +1,136 @@
+<html>
+<head>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/home.css">
+	<script type="text/javascript" src="js/jquery.min.js"> </script>
+	<script type="text/javascript" src="js/tooltip.js"> </script>
+	<script src="js/crypt.js"></script>
+	<script>
+	var selection=[{'visible':false},{'visible':false},{'visible':false},{'visible':false}]
+	$(document).ready(function(){
+		$('.inactive').tooltip();
+		$('.bin').click(function(e){del(e)});
+		init();
+		$('.submit-btn').click(submit())
+	});
+	function init(){
+		//get the prior selection and count of selectors if any
+
+	}
+
+	function del(event){
+
+		curID = $(event.target).data().id
+		//delete curID
+	}
+
+	function submit(){
+		//post the selection array
+	}
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-offset-1 col-lg-10 col-xs-12">
+				<div class="row">
+					<ul class="nav nav-pills nav-justified">
+						<li><a class="active" href="#">Home</a></li>
+						<li><a class="inactive" data-toggle="tooltip" data-placement="bottom" title="To be announced on 14th Feb, 6 PM" >View Results</a></li>
+						<li><a href="#">How it Works</a></li>
+						<li><a href="#">Privacy</a></li>
+
+					</ul>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<input type="text" class="form-control name-search" placeholder="Start typing the name....">
+					</div>
+				</div>
+				<div class="row selections">
+					<div class="col-xs-6">
+						<div class="selection">
+							<img src="images/bin.png" alt="" class="bin" data-id="1">
+							<img src="images/sample.jpg" alt="" class="img-rounded pull-left selection-image">
+							<div class="pull-left selection-wrapper">
+								<div class="selection-name">
+									Parineeti Chopra
+								</div>
+								<div class="selection-detail">
+									BTech/CSE
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="selection">
+							<img src="images/bin.png" alt="" class="bin" data-id="2">
+
+							<img src="images/sample.jpg" alt="" class="img-rounded pull-left selection-image">
+							<div class="pull-left selection-wrapper">
+								<div class="selection-name">
+									Parineeti Chopra
+								</div>
+								<div class="selection-detail">
+									BTech/CSE
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="selection">
+							<img src="images/bin.png" alt="" class="bin" data-id="3">
+
+							<img src="images/sample.jpg" alt="" class="img-rounded pull-left selection-image">
+							<div class="pull-left selection-wrapper">
+								<div class="selection-name">
+									Parineeti Chopra
+								</div>
+								<div class="selection-detail">
+									BTech/CSE
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="selection">
+							<img src="images/bin.png" alt="" class="bin" data-id="4">
+
+							<img src="images/sample.jpg" alt="" class="img-rounded pull-left selection-image ">
+							<div class="pull-left selection-wrapper">
+								<div class="selection-name">
+									Parineeti Chopra
+								</div>
+								<div class="selection-detail">
+									BTech/CSE
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<button type="button" class="btn btn-default submit-btn">Submit</button>
+				</div>
+				<div class="row anon-selections-wrapper">
+					<div class="col-xs-12 anon-selections">
+						Someone wants you to be their valentine...
+					</div>
+					<div class="col-xs-3">
+						<img src="images/anon-male.png" alt="" class="img-rounded img-responsive img-anon">
+					</div>
+					<div class="col-xs-3">
+						<img src="images/anon-male.png" alt="" class="img-rounded img-responsive img-anon">
+					</div>
+					<div class="col-xs-3">
+						<img src="images/anon-male.png" alt="" class="img-rounded img-responsive img-anon">
+					</div>
+					<div class="col-xs-3 anon-count">
+						<p>and 3 others...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>	
+</body>
+</html>

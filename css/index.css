@@ -1,0 +1,14 @@
+@font-face {
+	font-family: ProximaNova
+	src: url('proxima-nova-regular.ttf') format("truetype");
+}
+.debug{
+	border: 1px dotted green;
+}
+body{
+	background-image: url('../images/bg.jpg');
+	background-size: cover;
+}
+*{
+	font-family: ProximaNova
+}
