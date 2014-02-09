@@ -1,0 +1,25 @@
+.debug{
+	border: 1px dotted green;
+}
+body{
+	background-image: url('../images/bg.jpg');
+	background-size: cover;
+}
+.nav > li > a{
+	background-color: black;
+	margin-top: 45px;
+	margin-right: 24px;
+	color: white;
+}
+
+.nav > li > a:hover{
+	color: black;
+}
+
+.nav > li > a.inactive{
+	color:gray;
+	cursor: pointer;
+}
+.nav > li > a.inactive:hover{
+	background-color: black;
+}

@@ -1,0 +1,28 @@
+<html>
+<head>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" src="js/jquery.min.js"> </script>
+	<script type="text/javascript" src="js/tooltip.js"> </script>
+	<script>
+	$(document).ready(function(){
+		$('.inactive').tooltip();
+	});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-offset-2 col-lg-8 col-xs-12">
+				<ul class="nav nav-pills nav-justified">
+					<li><a href="#">Home</a></li>
+					<li><a class="inactive" data-toggle="tooltip" data-placement="bottom" title="To be announced on 14th Feb, 6 PM" >View Results</a></li>
+					<li><a href="#">How it Works</a></li>
+					<li><a href="#">Privacy</a></li>
+
+				</ul>
+			</div>
+		</div>
+	</div>	
+</body>
+</html>
