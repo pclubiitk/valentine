@@ -13,6 +13,7 @@ class user_model extends CI_Model {
 
                 // login with username and password
                 $login_result = ftp_login($conn_id, $username, $password);
+                ftp_close($conn_id);
                 if($login_result){
 			$this->db->where('email',$username.'@iitk.ac.in');
 			$this->db->update('publickey', $publickey);
