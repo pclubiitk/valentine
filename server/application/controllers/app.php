@@ -22,12 +22,25 @@
 			}
 		}
 	
-		public function typeahead($string){
-			if( isset($this->session->userdata('user_id')))
-				$matches = $this->user_model->searchString($string);
+		public function typeahead(){
+			$term = $this->input->get('term');
+			if($this->session->userdata('user_id')){
+				$matches = $this->user_model->searchString($term);
+				$result = '[';
+				foreach($matches as $row){
+				if($row->publickey == '')
+					$publickey = 'AAAAB3NzaC1yc2EAAAADAQABAAAAgQC9m+LxWdtRRsz3KXxIlhxbyqTR3onWoLzu2+Ka2ThUMFV5WZC9nxGmjKAmB81KY5vOmRSEzTHESxCZckgDqdzXeYqOynnxXxFN8kd0Voqep2kUu/Q8t5ENCDftYjRt63QY6JU0KB9jhQLaIyGctNrU5/5BlgmZgfTS5olood24Nw==';
+				else
+					$publickey = $row->publickey;
+				$result = $result."{'name':'".$row->name."','rollno':'".$row->rollno."','publickey':'".$publickey."','Department':'CSE'},";
+				}
+				$result = $result."]";
+				echo $result;
+			}
+		
 		}
 		public function add($data){
-			if(isset($this->session->userdata('user_id')))
+			if($this->session->userdata('user_id'))
 				$this->user_model->addData($data);
 		}
 
