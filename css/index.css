@@ -1,0 +1,44 @@
+@font-face {
+	font-family: ProximaNova
+	src: url('proxima-nova-regular.ttf') format("truetype");
+}
+.debug{
+	border: 1px dotted green;
+}
+body{
+	background-image: url('../images/bg.jpg');
+	background-size: cover;
+	height: 100%;
+}
+*{
+	font-family: ProximaNova
+}
+
+.info{
+	max-height: 80%;
+}
+
+
+
+#getStarted{
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	font-size: 18;
+}
+
+#getStarted > input{
+	display: inline;
+	margin-right: 24px;
+	background-color: rgba(0,0,0,0.5);
+	color: white;
+	border-radius: 30px;
+padding: 4 13;
+width: 32%;
+max-width: 240px;
+font-family: Helvetica;
+}
+.form-control:focus{
+	border-color: blueviolet;
+}
