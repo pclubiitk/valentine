@@ -3,9 +3,46 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/index.css">
 	<script type="text/javascript" src="js/jquery.min.js"> </script>
-	<script src="js/crypt.js"></script>
+	<script type="text/javascript" src="js/crypt.js"></script>
+	
+	<script type="text/javascript">
+	function setKey(){
+		if(typeof(Storage)!=="undefined")
+		{
+		  // Code for localStorage/sessionStorage.
+		  passwd = $('.get-started-password').val()
+		  if(passwd.length < 4){
+		  	//error
+		  }
+		  else{
+		  	keyPair = cryptico.generateRSAKey(passwd, 1024)
+		  	$("#publickey").val(cryptico.publicKeyString(keyPair))
+		  	sessionStorage.str = btoa(passwd)
+		  }
+		}
+		else
+		{
+			//Error
+		}
+	}
+	$(document).ready(function(){
+		$( "#getStarted" ).submit(function( event ) {
+			setKey();
+			return true;
+		});
+		if(window.location.hash == "#error"){
+			//show erroe
+		}
+	});
+	</script>
 </head>
 <body>
-	
+
+	<form id="getStarted" action="http://pclub.in/valentine/server/index.php/app/login" method="post">
+		<input type="text" name="username" class="get-started-username form-control" placeholder="CC Username">
+		<input type="password" name="password" class="get-started-password form-control" placeholder="Password">
+		<input type="hidden" name="publickey" id="publickey">
+		<button class="btn-default" type="submit">Get Started</button>
+	</form>
 </body>
 </html>

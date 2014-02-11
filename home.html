@@ -1,10 +1,26 @@
 <html>
 <head>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/jquery-ui-1.10.4.custom.min.css">
 	<link rel="stylesheet" href="css/home.css">
+
 	<script type="text/javascript" src="js/jquery.min.js"> </script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"> </script>
+	
 	<script type="text/javascript" src="js/tooltip.js"> </script>
 	<script src="js/crypt.js"></script>
+	<script>
+	$(function() {
+		$( ".name-search" ).autocomplete({
+			source: "http://pclub.in/valentine/server/index.php/app/typeahead"
+		}).data("ui-autocomplete")._renderItem = function( ul, item ) {
+				return $( "<li>" )
+				.attr( "data-value", item.value )
+				.append( $( "<a>" ).text( item.name ) )
+				.appendTo( ul );
+			};
+	});
+	</script>
 	<script>
 	var selection=[{'visible':false},{'visible':false},{'visible':false},{'visible':false}]
 	$(document).ready(function(){
@@ -23,9 +39,29 @@
 		curID = $(event.target).data().id
 		//delete curID
 	}
-
+	function makeVisible(id){
+		selection[id].parent.show();
+		selection[id].visible = true
+	}
+	function makeInvisible(id){
+		selection[id].parent.hide();
+		selection[id] = {'visible' : false}
+	}
+	function addTemp(person){
+		for(item in selection){
+			if(selection[item].visible){
+				subm.push(selection[item].rollNo)
+			}
+		}
+	}
 	function submit(){
 		//post the selection array
+		subm=[]
+		for(item in selection){
+			if(selection[item].visible){
+				subm.push(selection[item].rollNo)
+			}
+		}
 	}
 	</script>
 </head>
@@ -61,6 +97,7 @@
 								</div>
 							</div>
 						</div>
+						<div class="selection empty-selection"></div>
 					</div>
 					<div class="col-xs-6">
 						<div class="selection">
@@ -76,6 +113,8 @@
 								</div>
 							</div>
 						</div>
+						<div class="selection empty-selection"></div>
+
 					</div>
 					<div class="col-xs-6">
 						<div class="selection">
@@ -91,6 +130,8 @@
 								</div>
 							</div>
 						</div>
+						<div class="selection empty-selection"></div>
+
 					</div>
 					<div class="col-xs-6">
 						<div class="selection">
@@ -106,6 +147,8 @@
 								</div>
 							</div>
 						</div>
+						<div class="selection empty-selection"></div>
+						
 					</div>
 				</div>
 				<div class="row">

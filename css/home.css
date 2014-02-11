@@ -42,6 +42,7 @@ body{
 	margin-top: 50px;
 	background-color: rgba(0,0,0,0.5);
 	color: white;
+	font-size: 16;
 }
 .form-control:focus{
 	border-color: blueviolet;
@@ -163,7 +164,7 @@ font-size: 20;
 }
 .anon-count>p{
 	position: absolute;
-	bottom: 9px;
+	bottom: -5px;
 	font-size: 20;
 	font-family: ProximaNova;
 }
@@ -186,4 +187,30 @@ font-size: 20;
 .submit-btn:hover{
 	color: black;
 	background-color: white;
+}
+.empty-selection{
+	border:1px dashed white;
+	display: none;
+}
+.ui-menu-item{
+	background-color: rgba(0,0,0,0.8);
+	
+	margin: 0 5px; 
+}
+
+.ui-menu-item > a{
+	color: white;
+}
+
+.ui-autocomplete{
+	background-color: transparent;
+}
+.ui-widget-content{
+	background: none;
+}
+.ui-state-focus{
+	color: black!important;
+	border:none!important;
+	background: none!important;
+	background-color: white!important;
 }
