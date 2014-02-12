@@ -5,12 +5,18 @@
 *{
 	font-family: ProximaNova
 }
+body{
+	background-image: url("http://pclub.in/valentine/images/cream_pixels.png");
+}
 .debug{
 	border: 1px dotted green;
 }
-body{
-	background-image: url('../images/bg.jpg');
-	background-size: cover;
+.header{
+	position: absolute;
+	top:0px;
+	background-color: darkred;
+	height: 103px;
+	width: 100%;
 }
 .nav > li > a{
 	background-color: black;
@@ -40,8 +46,8 @@ body{
 }
 .name-search{
 	margin-top: 50px;
-	background-color: rgba(0,0,0,0.5);
-	color: white;
+	background-color: white;
+	color: black;
 	font-size: 16;
 }
 .form-control:focus{
@@ -63,7 +69,7 @@ font-size: 20;
 
 }*/
 .selection{
-	background-color: rgba(0,0,0,0.5);
+	background-color: darkred;
 	color: white;
 	min-height: 161px;
 	margin-top: 25px;
@@ -146,7 +152,7 @@ font-size: 20;
 	}
 }
 .anon-selections-wrapper {
-	background-color: rgba(0,0,0,0.5);
+	background-color: darkred;
 	color: white;
 	margin:0px;
 	margin-top:90px;
@@ -213,4 +219,14 @@ font-size: 20;
 	border:none!important;
 	background: none!important;
 	background-color: white!important;
+}
+
+.logout{
+	position: absolute;
+	top:33px;
+	right:44px;
+	border-radius: 17;
+	padding: 10;
+	cursor: pointer;
+	color: black;
 }
