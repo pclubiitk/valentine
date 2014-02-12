@@ -1,8 +1,12 @@
 <html>
 <head>
+	<title>Puppy Love</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/index.css">
+	<link href="css/jquery.pnotify.default.css" media="all" rel="stylesheet" type="text/css" />
+
 	<script type="text/javascript" src="js/jquery.min.js"> </script>
+	<script type="text/javascript" src="js/jquery.pnotify.min.js"></script>
 	<script type="text/javascript" src="js/crypt.js"></script>
 	
 	<script type="text/javascript">
@@ -15,14 +19,23 @@
 		  	//error
 		  }
 		  else{
-		  	keyPair = cryptico.generateRSAKey(passwd, 1024)
-		  	$("#publickey").val(cryptico.publicKeyString(keyPair))
-		  	sessionStorage.str = btoa(passwd)
+		  	sessionStorage.setItem('str', btoa(passwd));
+		  	// sessionStorage.str = btoa(passwd);
+		  	if(passwd.length > 8){
+		  		passwd = passwd.substring(0,8);
+		  	}
+		  	keyPair = cryptico.generateRSAKey(passwd, 1024);
+		  	$("#publickey").val(cryptico.publicKeyString(keyPair));
 		  }
 		}
 		else
 		{
-			//Error
+			$.pnotify({
+				title: 'Something went wrong!',
+				text: 'Please use a modern browser..',
+				type:"error"
+			});
+			
 		}
 	}
 	$(document).ready(function(){
@@ -30,19 +43,34 @@
 			setKey();
 			return true;
 		});
+		$( "#getStarted2" ).submit(function( event ) {
+			setKey();
+			return true;
+		});
 		if(window.location.hash == "#error"){
-			//show erroe
-		}
-	});
-	</script>
-</head>
-<body>
+			$.pnotify({
+				title: 'Something went wrong!',
+				text: 'Invalid username/password.',
+				type:"error"
+			});
 
-	<form id="getStarted" action="http://pclub.in/valentine/server/index.php/app/login" method="post">
-		<input type="text" name="username" class="get-started-username form-control" placeholder="CC Username">
-		<input type="password" name="password" class="get-started-password form-control" placeholder="Password">
-		<input type="hidden" name="publickey" id="publickey">
-		<button class="btn-default" type="submit">Get Started</button>
-	</form>
-</body>
-</html>
+		};
+	});
+		</script>
+	</head>
+	<body>
+		<form id="getStarted2" action="http://pclub.in/valentine/server/index.php/app/login" method="post" role="form" class="form-inline">
+			<input type="text" name="username" class="get-started-username form-control" placeholder="CC Username">
+			<input type="password" name="password" class="get-started-password form-control" placeholder="Password">
+			<input type="hidden" name="publickey" id="publickey">
+			<button class="btn btn-info" type="submit">Get Started</button>
+		</form>
+		<img src = "images/image.jpg" style="display: block;margin-left: auto;margin-right:auto;width: auto;height:255em;margin-bottom:50px;margin-top:100px;"></img>
+		<form id="getStarted" action="http://pclub.in/valentine/server/index.php/app/login" method="post" role="form" class="form-inline">
+			<input type="text" name="username" class="get-started-username form-control" placeholder="CC Username">
+			<input type="password" name="password" class="get-started-password form-control" placeholder="Password">
+			<input type="hidden" name="publickey" id="publickey">
+			<button class="btn btn-info" type="submit">Get Started</button>
+		</form>
+	</body>
+	</html>

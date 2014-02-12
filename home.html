@@ -1,71 +1,110 @@
 <html>
 <head>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<title>Puppy Love :: Home</title>
+	
 	<link rel="stylesheet" href="css/jquery-ui-1.10.4.custom.min.css">
 	<link rel="stylesheet" href="css/home.css">
 
 	<script type="text/javascript" src="js/jquery.min.js"> </script>
 	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"> </script>
+	<script type="text/javascript" src="js/restext.js"> </script>
 	
-	<script type="text/javascript" src="js/tooltip.js"> </script>
+	<script type="text/javascript" src="js/bootstrap.min.js"> </script>
+	<script type="text/javascript" src="js/jquery.pnotify.min.js"></script>
+<link href="css/jquery.pnotify.default.css" media="all" rel="stylesheet" type="text/css" />
 	<script src="js/crypt.js"></script>
 	<script>
+	
 	var selection=[{'visible':false},{'visible':false},{'visible':false},{'visible':false}]
-	$(function() {
-		$( ".name-search" ).autocomplete({
-			source: "http://pclub.in/valentine/server/index.php/app/typeahead"
-		}).data("ui-autocomplete")._renderItem = function( ul, item ) {
-			
-			return $( "<li>" )
-			.attr( "data-value", item.value )
-			.append( $( "<a>" ).text( item.name+"      "+item.program+'/'+item.department ) )
-			.appendTo( ul );
-		};
-		$( ".name-search" ).on( "autocompleteselect", function( event, ui ) {
-			
-			fillVoid(ui.item)
-		});
 
+
+	$(document).ready(function() {
+		$('#followingBallsG').show()
+		$('.logout').click(function(){
+			sessionStorage.clear();
+			return true;
+		})
+		$('.responsive').responsiveText();
 	});
 	</script>
 	<script>
 	$(document).ready(function(){
 		$('.inactive').tooltip();
 		$('.bin').click(function(e){del(e)});
-		init();
-		$('.submit-btn').click(function(){submit()})
+		$('.bin').hide();
+		$('.submit-btn').hide();
+		$.get('http://pclub.in/valentine/server/index.php/app/loggedin',function(data){
+			if(data.search("TRUE") ==-1){
+				window.location="http://pclub.in/valentine"
+			}
+			init();
+
+		}
+		)
+
+		$('.upload').click(function(){submit()})
 	});
 	function init(){
-		keyPair = cryptico.generateRSAKey(atob(sessionStorage.str), 1024)
+		$( ".name-search" ).autocomplete({
+			source: "http://pclub.in/valentine/server/index.php/app/typeahead"
+		}).data("ui-autocomplete")._renderItem = function( ul, item ) {
+			
+			return $( "<li>" )
+			.attr( "data-value", item.value )
+			.append( $( "<a>" ).append($("<p>").text(item.name.toUpperCase()).addClass("auto-left")).append($("<p>").text(item.department.toUpperCase()).addClass("auto-center")).append($("<p>").text(item.program.toUpperCase()).addClass("auto-right")) )
+			.appendTo( ul );
+		};
+		$( ".name-search" ).on( "autocompleteselect", function( event, ui ) {
+			
+			fillVoidWithDel(ui.item)
+		});
+		if(sessionStorage.getItem('str')==null || sessionStorage.getItem('str')==""){
+			$.pnotify({
+            title: 'Something went wrong!',
+            text: 'Please login again.',
+            type:"error"
+        });
+			return
+		}
+		keyPair = cryptico.generateRSAKey(atob(sessionStorage.getItem('str')), 1024)
 		voids = $('.mm');
 		for (var i = voids.length - 1; i >= 0; i--) {
 			one_void = $(voids[i]);
 			selection[i].handle = one_void;
 		};
-		$('.mm').hide();
+		// $('.mm').hide();
+		
 
 		//get the prior selection and count of selectors if any
 		$.get( "http://pclub.in/valentine/server/index.php/app/crushes", function( data ) {
 			if(data.length==0){
 		// $('.empty-selection').show();
+		$('.submit-btn').show();
 
-			}
-				else
-					{
-						data = data[0]
-						$('.bin').hide();
-						$('.submit-btn').hide();
-						$('.ui-autocomplete-input').attr('disabled',1);
-						$('.ui-autocomplete-input').attr('placeholder',"You cant select any more people")
+	}
+	else
+	{
+		data = data[0]
+		$('.bin').hide();
+		$('.submit-btn').hide();
+		$('.ui-autocomplete-input').attr('disabled',1);
+		$('.ui-autocomplete-input').attr('placeholder',"You cant select any more people")
 
-						
-						rolls = keyPair.decrypt(data.data)
-						rolls = JSON.parse(rolls);
-						for(roll in rolls){
-							$.get("http://pclub.in/valentine/server/index.php/app/details",{rollno:rolls[roll]},function(data1){fillVoid(data1[0])},"json");
-						}
-					}
-				},"json");
+
+		rolls = keyPair.decrypt(data.data)
+		rolls = JSON.parse(rolls);
+		for(roll in rolls){
+			$.get("http://pclub.in/valentine/server/index.php/app/details",{rollno:rolls[roll]},function(data1){fillVoid(data1[0])},"json");
+		}
+	}
+	initialHearts()
+},"json");
+		
+		$('#followingBallsG').hide()
+		
+	}
+	function initialHearts(){
 		$.get('http://pclub.in/valentine/server/index.php/app/mydetails',function(data){
 			myRoll = data[0].rollno
 			myGender = data[0].gender
@@ -74,17 +113,27 @@
 		pkey = cryptico.publicKeyString(def)
 		mycount = 0
 		$.get('http://pclub.in/valentine/server/index.php/app/count',function(data){
-			$('.anon-count').text(data)
+			mycount = parseInt(data)
+			if(mycount>0)
+				$('.anon-selections-wrapper').show()
+			for (var i = 0; i < 10; i++) {
+				if(i>=mycount)
+					$('.tt'+(i+1)).attr("src","images/heart-empty.png")
+				else
+					$('.tt'+(i+1)).attr("src","images/heart-filled.png")
 
-		})
-		$.get('http://pclub.in/valentine/server/index.php/app/loggedin',function(data){
-			if(data.search("TRUE") ==-1){
-				window.location="http://pclub.in/valentine"
-			}
-		})
+			};
+			// hearts = $('.img-anon')
+			// for(it in hearts){
+			// 	heart = $(hearts[it])
+			// 	if(it<mycount)
+			// 		heart.attr("src","images/heart-filled.png")
+			// 	else
+			// 		heart.attr("src","images/heart-empty.png")
 
+			// }
+		})
 	}
-
 	function del(event){
 
 		curID = $(event.target).data().id
@@ -97,37 +146,59 @@
 		selection[id].visible = true
 	}
 	function makeInvisible(id){
-		selection[id].handle.hide();
+		// selection[id].handle.hide();
+		// selection[id]
 		selection[id].visible = false;
-		selection[id].rollno = -1
-	}
-	function fillVoid(person){
-		console.log(person)
-		aa= person
-		for(item in selection){
-			if(! selection[item].visible){
-				selection[item].rollno=person.rollno;
-				selection[item].publickey=person.publickey;
-				selection[item].handle.find('.selection-detail').text(person.department+"/"+person.program)
-				selection[item].handle.find('.selection-name').text(person.name.toUpperCase())
-				selection[item].handle.find('.selection-image').attr('src','http://oa.cc.iitk.ac.in:8181/Oa/Jsp/Photo/'+person.rollno.toUpperCase()+'_0.jpg')
+		selection[id].handle.find('.bin').hide()
+		selection[id].handle.find('.selection-detail').text("")
+		selection[id].handle.find('.selection-name').text("")
+		selection[id].handle.find('.selection-image').attr('src','images/anon-male.png')
+			selection[id].rollno = -1
+		}
+		function fillVoid(person){
+			for(item in selection){
+				if(! selection[item].visible){
+					selection[item].rollno=person.rollno;
+					selection[item].publickey=person.publickey;
+					selection[item].handle.find('.selection-detail').text(person.department.toUpperCase()+"/"+person.program.toUpperCase())
+					selection[item].handle.find('.selection-name').text(person.name.toUpperCase())
+					selection[item].handle.find('.selection-image').attr('src','http://oa.cc.iitk.ac.in:8181/Oa/Jsp/Photo/'+person.rollno.toUpperCase()+'_0.jpg')
 
-				makeVisible(item);
-				break;
+					makeVisible(item);
+					break;
+				}
 			}
 		}
-	}
-	function addTemp(person){
-		for(item in selection){
-			if(selection[item].visible){
-				subm.push(selection[item].rollNo)
+		function fillVoidWithDel(person){
+			for(item in selection){
+				if(! selection[item].visible){
+					selection[item].rollno=person.rollno;
+					selection[item].publickey=person.publickey;
+					selection[item].handle.find('.selection-detail').text(person.department.toUpperCase()+"/"+person.program.toUpperCase())
+					selection[item].handle.find('.selection-name').text(person.name.toUpperCase())
+					selection[item].handle.find('.selection-image').attr('src','http://oa.cc.iitk.ac.in:8181/Oa/Jsp/Photo/'+person.rollno.toUpperCase()+'_0.jpg')
+					selection[item].handle.find('.bin').show()
+
+					makeVisible(item);
+					break;
+				}
 			}
 		}
-	}
-	function submit(){
+		function addTemp(person){
+			for(item in selection){
+				if(selection[item].visible){
+					subm.push(selection[item].rollNo)
+				}
+			}
+		}
+		function submit(){
 		//post the selection array
 		if(myRoll == -1){
-			alert("ERROR rollNO not defeines");
+			 $.pnotify({
+            title: 'Something went wrong!',
+            text: 'Please refresh the page.',
+            type:"error"
+        });
 			return;
 		}
 		
@@ -144,7 +215,11 @@
 					data[item] = cryptico.encrypt(myRoll,pkey)
 
 				if(data[item].status != "success"){
-					console.log(data[item]);
+					$.pnotify({
+            title: 'Something went wrong!',
+            text: 'Please refresh the page.',
+            type:"error"
+        });
 					return;
 				}
 				data[item] = data[item].cipher
@@ -156,32 +231,66 @@
 		enc = keyPair.encrypt(JSON.stringify(subm))
 		$.post('http://pclub.in/valentine/server/index.php/app/addfrom',{data:enc},function(){
 			$('.bin').hide();
-						$('.submit-btn').hide();
+			$('.submit-btn').hide();
+		$('.ui-autocomplete-input').attr('disabled',1);
+		$('.ui-autocomplete-input').attr('placeholder',"You cant select any more people")
+			
+			$.pnotify({
+            title: 'Selections Uploaded!',
+            text: 'You cant make further changes to your selection.',
+            type:"success"
+        });
 		})
 
 
-			console.log(subm)
 	}
 	
 	</script>
 </head>
 <body>
+	<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Are you sure?</h4>
+      </div>
+      <div class="modal-body">
+        <p>You shall not be able to make any further changes after this.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary upload" data-dismiss="modal">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 	<div class="header">
+		<div id="followingBallsG">
+<div id="followingBallsG_1" class="followingBallsG">
+</div>
+<div id="followingBallsG_2" class="followingBallsG">
+</div>
+<div id="followingBallsG_3" class="followingBallsG">
+</div>
+<div id="followingBallsG_4" class="followingBallsG">
+</div>
+</div>
 	</div>
 	<a href="http://pclub.in/valentine/server/index.php/app/logout"><div class="btn-default logout">Logout</div></a>
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-offset-1 col-lg-10 col-xs-12">
 				<div class="row">
-					<img src="images/logo_white.png" style='margin-left:25em;height:7em'/>
-					<img src="images/title.png" style='height:2.5em;' />
-				</div>
+					<img src="images/logonew.png" style='margin-left:auto;margin-right:auto;display: block;height:7em'/>
+<!-- 					<img src="images/title.png" style='height:2.5em;' />
+ -->				</div>
 				<div class="row">
 					<ul class="nav nav-pills nav-justified">
-						<li><a class="active" href="#">Home</a></li>
+						<li><a class="active" href="home.html#">Home</a></li>
 						<li><a class="inactive" data-toggle="tooltip" data-placement="bottom" title="To be announced on 14th Feb, 6 PM" >View Results</a></li>
-						<li><a href="#">How it Works</a></li>
-						<li><a href="#">Privacy</a></li>
+						<li><a href="howitworks.html">How it Works</a></li>
+						<li><a href="privacy.html#">Privacy</a></li>
 
 					</ul>
 				</div>
@@ -194,13 +303,13 @@
 					<div class="col-xs-6">
 						<div class="selection mm" data-id="0">
 							<img src="images/bin.png" alt="" class="bin" data-id="0">
-							<img src="images/sample.jpg" alt="" class="img-rounded pull-left selection-image">
-							<div class="pull-left selection-wrapper">
-								<div class="selection-name" id='name-1'>
-									Parineeti Chopra
+							<img src="images/anon-male.png" alt="" class="img-rounded pull-left selection-image">
+							<div class="text-center selection-wrapper">
+								<div class="selection-name responsive" data-compression="8" data-min="20" data-max="30" id='name-1'>
+									
 								</div>
 								<div class="selection-detail" id='dep-1'>
-									BTech/CSE
+									
 								</div>
 							</div>
 						</div>
@@ -210,13 +319,13 @@
 						<div class="selection mm" data-id="1">
 							<img src="images/bin.png" alt="" class="bin" data-id="1">
 
-							<img src="images/sample.jpg" alt="" class="img-rounded pull-left selection-image">
-							<div class="pull-left selection-wrapper">
-								<div class="selection-name" id='name-2'>
-									Parineeti Chopra
+							<img src="images/anon-male.png" alt="" class="img-rounded pull-left selection-image">
+							<div class="text-center selection-wrapper">
+								<div class="selection-name responsive" data-compression="8" data-min="20" data-max="30" id='name-2'>
+									
 								</div>
 								<div class="selection-detail" id='dep-2'>
-									BTech/CSE
+									
 								</div>
 							</div>
 						</div>
@@ -227,13 +336,13 @@
 						<div class="selection mm" data-id="2">
 							<img src="images/bin.png" alt="" class="bin" data-id="2">
 
-							<img src="images/sample.jpg" alt="" class="img-rounded pull-left selection-image">
-							<div class="pull-left selection-wrapper">
-								<div class="selection-name" id='name-3'>
-									Parineeti Chopra
+							<img src="images/anon-male.png" alt="" class="img-rounded pull-left selection-image">
+							<div class="text-center selection-wrapper">
+								<div class="selection-name responsive" data-compression="8" data-min="20" data-max="30" id='name-3'>
+									
 								</div>
 								<div class="selection-detail" id='dep-3'>
-									BTech/CSE
+									
 								</div>
 							</div>
 						</div>
@@ -244,13 +353,13 @@
 						<div class="selection mm" data-id="3">
 							<img src="images/bin.png" alt="" class="bin" data-id="3">
 
-							<img src="images/sample.jpg" alt="" class="img-rounded pull-left selection-image ">
-							<div class="pull-left selection-wrapper">
-								<div class="selection-name" id='name-4'>
-									Parineeti Chopra
+							<img src="images/anon-male.png" alt="" class="img-rounded pull-left selection-image ">
+							<div class="text-center selection-wrapper">
+								<div class="selection-name responsive" data-compression="8" data-min="20" data-max="30" id='name-4'>
+									
 								</div>
 								<div class="selection-detail" id='dep-4'>
-									BTech/CSE
+									
 								</div>
 							</div>
 						</div>
@@ -259,24 +368,43 @@
 					</div>
 				</div>
 				<div class="row">
-					<button type="button" class="btn btn-default submit-btn">Submit</button>
+					<button type="button" class="btn btn-default submit-btn" data-toggle="modal" data-target="#myModal">Submit</button>
 				</div>
 				<div class="row anon-selections-wrapper">
 					<div class="col-xs-12 anon-selections">
-						Someone wants you to be their valentine...
+						Crush-o-meter!
 					</div>
-					<div class="col-xs-3">
-						<img src="images/heart.png" alt="" class="img-rounded img-responsive img-anon">
+					<div class="col-xs-offset-1 col-xs-1 img-anon-wrapper">
+						<img src="images/heart-empty.png" alt="" class="img-rounded img-responsive img-anon tt1">
 					</div>
-					<div class="col-xs-3">
-						<img src="images/heart.png" alt="" class="img-rounded img-responsive img-anon">
+					<div class="col-xs-1 img-anon-wrapper">
+						<img src="images/heart-empty.png" alt="" class="img-rounded img-responsive img-anon tt2">
 					</div>
-					<div class="col-xs-3">
-						<img src="images/heart.png" alt="" class="img-rounded img-responsive img-anon">
+					<div class="col-xs-1 img-anon-wrapper">
+						<img src="images/heart-empty.png" alt="" class="img-rounded img-responsive img-anon tt3">
 					</div>
-					<div class="col-xs-3 anon-count">
-						<p>and 3 others...</p>
+					<div class="col-xs-1 img-anon-wrapper">
+						<img src="images/heart-empty.png" alt="" class="img-rounded img-responsive img-anon tt4">
 					</div>
+					<div class="col-xs-1 img-anon-wrapper">
+						<img src="images/heart-empty.png" alt="" class="img-rounded img-responsive img-anon tt5">
+					</div>
+					<div class="col-xs-1 img-anon-wrapper">
+						<img src="images/heart-empty.png" alt="" class="img-rounded img-responsive img-anon tt6">
+					</div>
+					<div class="col-xs-1 img-anon-wrapper">
+						<img src="images/heart-empty.png" alt="" class="img-rounded img-responsive img-anon tt7">
+					</div>
+					<div class="col-xs-1 img-anon-wrapper">
+						<img src="images/heart-empty.png" alt="" class="img-rounded img-responsive img-anon tt8">
+					</div>
+					<div class="col-xs-1 img-anon-wrapper">
+						<img src="images/heart-empty.png" alt="" class="img-rounded img-responsive img-anon tt9">
+					</div>
+					<div class="col-xs-1 img-anon-wrapper">
+						<img src="images/heart-empty.png" alt="" class="img-rounded img-responsive img-anon tt10">
+					</div>
+					
 				</div>
 			</div>
 		</div>

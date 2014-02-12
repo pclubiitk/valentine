@@ -1,0 +1,69 @@
+<html>
+<head>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<title>Puppy Love :: How It Works</title>
+	
+	<link rel="stylesheet" href="css/jquery-ui-1.10.4.custom.min.css">
+	<link rel="stylesheet" href="css/home.css">
+
+	<script type="text/javascript" src="js/jquery.min.js"> </script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"> </script>
+	<script type="text/javascript" src="js/restext.js"> </script>
+	
+	<script type="text/javascript" src="js/bootstrap.min.js"> </script>
+
+	<script>
+	$(document).ready(function(){
+		$('.inactive').tooltip();
+		$('.logout').click(function(){
+			sessionStorage.clear();
+			return true;
+		})
+			$('.lo').hide()
+			$('.li').hide()
+		if(sessionStorage.getItem('str')==null || sessionStorage.get('str')==null ){
+			$('.lo').hide()
+			$('.li').show()
+		}
+		else{
+			$('.lo').show()
+			$('.li').hide()
+		}
+	});
+
+	</script>
+</head>
+<body>
+	
+	<div class="header">
+		
+	</div>
+	<a href="http://pclub.in/valentine/server/index.php/app/logout"><div style="display:none" class="btn-default logout lo">Logout</div><div class="btn-default login li" style="display:none">Login</div></a>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-offset-1 col-lg-10 col-xs-12">
+				<div class="row">
+					<img src="images/logonew.png" style='margin-left:auto;margin-right:auto;display: block;height:7em'/>
+<!-- 					<img src="images/title.png" style='height:2.5em;' />
+ -->				</div>
+				<div class="row">
+					<ul class="nav nav-pills nav-justified">
+						<li><a class="active" href="home.html#">Home</a></li>
+						<li><a class="inactive" data-toggle="tooltip" data-placement="bottom" title="To be announced on 14th Feb, 6 PM" >View Results</a></li>
+						<li><a href="howitworks.html">How it Works</a></li>
+						<li><a href="privacy.html#">Privacy</a></li>
+
+					</ul>
+				</div>
+				
+				
+				
+				<div class="row">
+					<img src = "images/image.jpg" style="display: block;margin-left: auto;margin-right:auto;width: auto;height:255em;margin-top:50px;margin-bottom:50px;"></img>
+				</div>
+			</div>
+		</div>
+		
+	</div>	
+</body>
+</html>
